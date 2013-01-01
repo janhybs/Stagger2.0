@@ -1,9 +1,9 @@
 package cz.edu.x3m;
 
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
+import cz.edu.x3m.net.objects.Subject;
 import cz.edu.x3m.steps.LoggedInStep;
 import cz.edu.x3m.steps.LoginStep;
-import cz.edu.x3m.steps.Subject;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -47,7 +47,7 @@ public class Main {
         HtmlPage loggedInPage = loginStep.login();
 
         LoggedInStep loggedInStep = new LoggedInStep(loggedInPage);
-        List<Subject> currTerms = loggedInStep.getTerms();
+        List<cz.edu.x3m.net.objects.Subject> currTerms = loggedInStep.getTerms();
 
 
         List<Subject> prevTerms = loadPrevTerms();

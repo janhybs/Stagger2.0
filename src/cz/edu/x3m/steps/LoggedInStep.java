@@ -3,6 +3,7 @@ package cz.edu.x3m.steps;
 import com.gargoylesoftware.htmlunit.html.DomElement;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import cz.edu.x3m.Main;
+import cz.edu.x3m.net.objects.Subject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;

@@ -1,6 +1,6 @@
 package cz.edu.x3m;
 
-import cz.edu.x3m.steps.Subject;
+import cz.edu.x3m.net.objects.Subject;
 import java.util.List;
 
 /**

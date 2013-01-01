@@ -1,4 +1,4 @@
-package cz.edu.x3m.steps;
+package cz.edu.x3m.net.objects;
 
 import com.gargoylesoftware.htmlunit.html.DomElement;
 
