@@ -62,13 +62,13 @@ public class Main {
         StageChangeResult result = TermComparator.compareSubjects(prevTerms, currTerms);
 
         System.out.println(result);
-        if (result.changes.isEmpty() || prevTerms.isEmpty()) {
+        if (result.changes.isEmpty()) {
             return false;
         } else {
             System.out.println(currTerms);
             saveCurrTerms(currTerms);
             System.out.println("Sending mail");
-            sendEMail(result);
+            if (!prevTerms.isEmpty()) sendEMail(result);
             return true;
         }
 
