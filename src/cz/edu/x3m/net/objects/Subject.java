@@ -45,7 +45,7 @@ public class Subject {
 
     @Override
     public String toString() {
-        return String.format("%s%s%s%s%d", acronym, SEPERATOR, title, SEPERATOR, count);
+        return String.format("%s%s%s%s%d%n", acronym, SEPERATOR, title, SEPERATOR, count);
     }
 
     public String asOutput() {
@@ -53,6 +53,6 @@ public class Subject {
     }
 
     public boolean isSameSubjectAs(Subject another) {
-        return title.equals(another.title);
+        return acronym.equals(another.acronym);
     }
 }
