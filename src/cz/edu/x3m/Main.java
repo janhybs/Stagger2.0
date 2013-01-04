@@ -23,12 +23,12 @@ public class Main {
 
     public static final Logger LOGGER = Logger.getLogger("cz.edu.x3m");
     public static final File DATA = new File(".terms");
-    public static final long SLEEP_TIME = 5 * 1000;
+    public static final long SLEEP_TIME = 2 * 60 * 1000;
 
     public Main() throws InterruptedException {
         while (true) {
             doWork();
-            Main.LOGGER.log(Level.INFO, "sleeping");
+            System.out.println("Sleep");
             synchronized (this) {
                 wait(SLEEP_TIME);
             }
@@ -36,28 +36,38 @@ public class Main {
     }
 
     public static void main(String[] args) throws IOException, InterruptedException {
+        Logger.getLogger("com.gargoylesoftware").setLevel(Level.OFF);
+        Logger.getLogger("cz.edu.x3m").setLevel(Level.OFF);
         new Main();
     }
 
     private boolean doWork() {
+
+        System.out.println("Login page");
         Client client = new Client();
         HtmlPage LoginPage = client.getLoginPage();
 
+        System.out.println("Logged in page");
         LoginStep loginStep = new LoginStep(LoginPage);
         HtmlPage loggedInPage = loginStep.login();
 
         LoggedInStep loggedInStep = new LoggedInStep(loggedInPage);
+        if (loggedInStep.hasLoginForm()) {
+            System.out.println("FULL");
+            return false;
+        }
         List<cz.edu.x3m.net.objects.Subject> currTerms = loggedInStep.getTerms();
 
-
         List<Subject> prevTerms = loadPrevTerms();
-        Result result = TermComparator.compareSubjects(prevTerms, currTerms);
+        StageChangeResult result = TermComparator.compareSubjects(prevTerms, currTerms);
 
-        Main.LOGGER.log(Level.INFO, result.type.toString());
-        if (result.type == Result.ResultType.NO_CHANGE) {
+        System.out.println(result);
+        if (result.changes.isEmpty() || prevTerms.isEmpty()) {
             return false;
         } else {
+            System.out.println(currTerms);
             saveCurrTerms(currTerms);
+            System.out.println("Sending mail");
             sendEMail(result);
             return true;
         }
@@ -98,7 +108,7 @@ public class Main {
         }
     }
 
-    private void sendEMail(Result result) {
+    private void sendEMail(StageChangeResult result) {
         Client c = new Client();
         c.getSendEmailPage(result);
     }
